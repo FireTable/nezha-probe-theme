@@ -1,0 +1,1049 @@
+{{define "theme-default/home"}}
+<!DOCTYPE html>
+<html lang="{{.Conf.Language}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>VPS Probe</title>
+    <!-- <title>{{.Title}}</title> -->
+    <!-- <link
+      rel="shortcut icon"
+      type="image/png"
+      href="/static/logo.svg?v20210804"
+    /> -->
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Arbutus"
+      rel="stylesheet"
+    />
+
+    <!-- Fix chrome language detection -->
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="zh" />
+
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.staticfile.org/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/semantic-ui-alerts.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/theme-hotaru/css/core.css?v202012121912"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/theme-hotaru/css/main.css?v202101171153"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/theme-hotaru/css/darkmode.css?v202103021121"
+      type="text/css"
+    />
+    <!-- <link
+      href="https://cdn.staticfile.org/bootstrap-icons/1.10.3/font/bootstrap-icons.css"
+      type="text/css"
+      rel="stylesheet"
+    /> -->
+    {{template "common/header" .}} {{if ts .CustomCode}} {{.CustomCode|safe}}
+    {{end}}
+  </head>
+
+  <style>
+      .panel-location{
+        background-color: rgba(255,255,255,0.7);
+        transition: all 0.3s ease;
+      }
+
+      .panel-location:hover{
+        background-color: rgba(255,255,255, 0.95);
+
+      }
+
+      .hidden {
+        visibility: hidden;
+        overflow: hidden;
+      }
+
+      .my-cover {
+        background: url("https://www.loliapi.com/acg/") center no-repeat;
+        background-size: 100%;
+        height: 65vh;
+        width: 100vw;
+        position: relative;
+      }
+
+      .my-container {
+        /* padding-top: 24px; */
+        padding-bottom: 24px;
+      }
+
+      .uptime-state {
+        display: inline-block;
+        padding: 0 8px;
+      }
+
+      table {
+        table-layout: fixed;
+        width: 100%;
+      }
+
+      /*-- Sign Styles --*/
+
+      .sign {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.85;
+      }
+
+      .sign * {
+        font-family: "Arbutus", cursive;
+        text-align: center;
+        color: white;
+        animation: neon 0.08s ease-in-out infinite alternate;
+      }
+
+      /*-- Animation Keyframes --*/
+
+      @keyframes neon {
+        from {
+          text-shadow: 0 0 6px rgba(202, 228, 225, 0.92),
+            0 0 30px rgba(202, 228, 225, 0.34), 0 0 12px rgba(30, 132, 242, 0.52),
+            0 0 21px rgba(30, 132, 242, 0.92), 0 0 34px rgba(30, 132, 242, 0.78),
+            0 0 54px rgba(30, 132, 242, 0.92);
+        }
+        to {
+          text-shadow: 0 0 6px rgba(202, 228, 225, 0.98),
+            0 0 30px rgba(202, 228, 225, 0.42), 0 0 12px rgba(30, 132, 242, 0.58),
+            0 0 22px rgba(30, 132, 242, 0.84), 0 0 38px rgba(30, 132, 242, 0.88),
+            0 0 60px rgba(30, 132, 242, 1);
+        }
+      }
+
+        /* 屏幕适配 */
+    @media only screen and (min-width: 1200px) {
+        .ui.container {
+        width: 80% !important;
+    }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+            margin-top: 0.4em !important;
+        }
+    }
+
+    /* 整体图标 */
+    i.icon {
+        color: #000;
+        width: 1.2em !important;
+    }
+
+    /* 背景图片 */
+    body {
+        content: " " !important;
+        background: fixed !important;
+        z-index: -1 !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        background-position: top !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-image: url(https://www.loliapi.com/acg/) !important;
+        font-family: Arial,Helvetica,sans-serif !important;
+    }
+
+
+
+    /* 登陆按钮 */
+    .nezha-primary-btn {
+        background-color: transparent !important;
+        color: #000 !important;
+    }
+
+    /* 大卡片 */
+    #app .ui.fluid.accordion {
+        background-color: #fbfbfb26 !important;
+        border-radius: 0.4rem !important;
+    }
+
+
+    .status.cards .wide.column {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        height: 3.3rem !important;
+    }
+
+    .status.cards .three.wide.column {
+        padding-right: 0rem !important;
+    }
+
+    .status.cards .wide.column:nth-child(1) {
+        margin-top: 2rem !important;
+    }
+
+    .status.cards .wide.column:nth-child(2) {
+        margin-top: 2rem !important;
+    }
+
+    .status.cards .description {
+        padding-bottom: 0 !important;
+    }
+
+    /* 小鸡名 */
+    .status.cards .flag {
+        margin-right: 0.5rem !important;
+    }
+
+    /* 弹出卡片图标 */
+    .status.cards .header > .info.icon {
+        margin-right: 0 !important;
+    }
+
+    .nezha-secondary-font {
+        color: #21ba45 !important;
+    }
+
+    /* 进度条 */
+    .ui.progress {
+        border-radius: 50rem !important;
+    }
+    .ui.progress .bar {
+        min-width: 1.8em !important;
+        border-radius: 15px !important;
+        line-height: 1.65em !important;
+        color:black
+    }
+    .ui.fine.progress> .bar {
+        background-color: #ba45ac !important;
+    }
+    .ui.progress> .bar {
+        background-color: #000 !important;
+    }
+
+    .ui.progress.fine .bar {
+        background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);!important;
+    }
+
+    .ui.progress.warning .bar {
+        background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%); !important;
+    }
+
+    .ui.progress.error .bar {
+        background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);important;
+    }
+
+    .ui.progress.offline .bar {
+        background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%); !important;
+    }
+
+    /* 上传下载 */
+    .status.cards .outline.icon {
+        margin-right: 1px !important;
+    }
+
+    i.arrow.alternate.circle.down.outline.icon {
+        color: #21ba45 !important;
+    }
+
+    i.arrow.alternate.circle.up.outline.icon {
+        color: red !important;
+    }
+
+    /* 弹出卡片小箭头 */
+    .ui.right.center.popup {
+        margin: -3px 0 0 0.914286em !important;
+        -webkit-transform-origin: left 50% !important;
+        transform-origin: left 50% !important;
+    }
+
+    .ui.bottom.left.popup {
+        margin-left: 1px !important;
+        margin-top: 3px !important;
+    }
+
+    .ui.top.left.popup {
+        margin-left: 0 !important;
+        margin-bottom: 10px !important;
+    }
+
+    .ui.top.right.popup {
+        margin-right: 0 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .ui.left.center.popup {
+        margin: -3px .91428571em 0 0 !important;
+        -webkit-transform-origin: right 50% !important;
+        transform-origin: right 50% !important;
+    }
+
+    .ui.right.center.popup:before,
+    .ui.left.center.popup:before {
+        border: 0px solid #fafafaeb !important;
+        background: #fafafaeb !important;
+    }
+    .ui.top.popup:before {
+        border-color: #fafafaeb transparent transparent !important;
+    }
+
+    .ui.popup:before {
+        border-color: #fafafaeb transparent transparent !important;
+    }
+
+    .ui.bottom.left.popup:before {
+        border-radius: 0 !important;
+        border: 1px solid transparent !important;
+        border-color: #fafafaeb transparent transparent !important;
+        background: #fafafaeb !important;
+        -webkit-box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+
+    .ui.bottom.right.popup:before {
+        border-radius: 0 !important;
+        border: 1px solid transparent !important;
+        border-color: #fafafaeb transparent transparent !important;
+        background: #fafafaeb !important
+        -webkit-box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+
+    .ui.top.left.popup:before {
+        border-radius: 0 !important;
+        border: 1px solid transparent !important;
+        border-color: #fafafaeb transparent transparent !important;
+        background: #fafafaeb !important;
+        -webkit-box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+
+    .ui.top.right.popup:before {
+        border-radius: 0 !important;
+        border: 1px solid transparent !important;
+        border-color: #fafafaeb transparent transparent !important;
+        background: #fafafaeb !important;
+        -webkit-box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+
+    .ui.left.center.popup:before {
+        border-radius: 0 !important;
+        border: 1px solid transparent !important;
+        border-color: #fafafaeb transparent transparent !important;
+        background: #fafafaeb !important;
+        -webkit-box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        box-shadow: 0px 0px 0 0 #fafafaeb !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+
+    /* 弹出卡片 */
+    .status.cards .ui.content.popup {
+        border-radius: 5px !important;
+        border: 1px solid transparent !important;
+        background-color: #fafafaeb !important;
+        font-family: Arial,Helvetica,sans-serif !important;
+        font-size: 1.6rem !important;
+        line-height: 2 !important;
+        min-width: 320px !important;
+    }
+
+    .ui.content {
+        margin: 0 !important;
+        padding: 1em !important;
+    }
+
+    /* 服务页 */
+    .ui.table {
+        background: RGB(225,225,225,0.7) !important;
+    }
+
+    .ui.table thead th {
+        background: transparent !important;
+    }
+
+    /* 服务页进度条 */
+
+    /* 版权 */
+    .ui.inverted.segment, .ui.primary.inverted.segment {
+        color: #000 !important;
+        font-weight: bold !important;
+        background-color: #fafafaa3 !important;
+    }
+  </style>
+
+  <body class="hidden">
+    <section>
+      <div class="container" style="text-align: center">
+        <div class="title sign" style="font-size: 3rem; line-height: 3">
+          <strong>VPS Probe</strong>
+          <!-- <strong>{{.Title}}</strong> -->
+        </div>
+      </div>
+    </section>
+
+    <div class="my-container">
+      <div id="app">
+        <div class="container" style="display: none">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>{{tr "Name"}}</th>
+                <!-- <th>{{tr "Platform"}}</th> -->
+                <!-- <th>{{tr "Location"}}</th> -->
+                <!-- <th width="80px">{{tr "Uptime"}}</th> -->
+                <th>{{tr "NetSpeed"}}↓ | ↑</th>
+                <th>{{tr "NetTransfer"}}↓ | ↑</th>
+                <th width="28%">用量</th>
+              </tr>
+            </thead>
+            <tbody id="servers" style="text-align: center">
+              <tr v-for="server in servers" :id="server.ID">
+                <td style="text-align: center">
+                  <div
+                    class="progress"
+                    style="margin: auto; margin-bottom: 4px"
+                  >
+                    <div
+                      :class="'uptime-state state-'+ (server.live?'online':'offline')"
+                    >
+                      <small
+                        >@#server.live?'{{tr "Running"}}':'{{tr "Offline"}}'#@
+                        &nbsp;
+                        @#server.State?secondToDate(server.State.Uptime):'-'#@</small
+                      >
+                    </div>
+                  </div>
+                  <span>@#server.Name#@</span>
+                </td>
+                <!-- <td>@#server.Host?server.Host.Platform:'-'#@</td> -->
+                <!-- <td>
+                  <img
+                    :src="'/static/theme-hotaru/img/clients/'+(server.Host&&server.Host.CountryCode?server.Host.CountryCode.toUpperCase():'CN')+'.png'"
+                  />
+                </td> -->
+                <!-- <td>@#server.State?secondToDate(server.State.Uptime):'-'#@</td> -->
+                <td>
+                  @#server.State?readableBytes(server.State.NetInSpeed)+`/s |
+                  `+readableBytes(server.State.NetOutSpeed)+'/s':'-'#@
+                </td>
+                <td>
+                  @#server.State?readableBytes(server.State.NetInTransfer)+` |
+                  `+readableBytes(server.State.NetOutTransfer):'-'#@
+                </td>
+                <td style="padding: 8px">
+                  CPU
+                  <div
+                    v-if="server.State"
+                    :class="formatPercent(server.live,server.State.CPU, 100).class"
+                  >
+                    <div
+                      class="bar"
+                      :style="formatPercent(server.live,server.State.CPU, 100).style"
+                    >
+                      <small
+                        >@#formatPercent(server.live,server.State.CPU,100).percent#@%</small
+                      >
+                    </div>
+                  </div>
+                  RAM
+                  <div
+                    v-if="server.State"
+                    :class="formatPercent(server.live,server.State.MemUsed, server.Host.MemTotal).class"
+                  >
+                    <div
+                      class="bar"
+                      :style="formatPercent(server.live,server.State.MemUsed, server.Host.MemTotal).style"
+                    >
+                      <small
+                        >@#parseInt(server.State?server.State.MemUsed/server.Host.MemTotal*100:0)#@%</small
+                      >
+                    </div>
+                  </div>
+                  {{tr "DiskUsed"}}
+                  <div
+                    v-if="server.State"
+                    :class="formatPercent(server.live,server.State.DiskUsed, server.Host.DiskTotal).class"
+                  >
+                    <div
+                      class="bar"
+                      :style="formatPercent(server.live,server.State.DiskUsed, server.Host.DiskTotal).style"
+                    >
+                      <small
+                        >@#parseInt(server.State?server.State.DiskUsed/server.Host.DiskTotal*100:0)#@%</small
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="page-section"
+          style="padding-top: 0; padding-bottom: 0; border-bottom: none"
+        >
+          <div class="container">
+            <div class="row">
+              <div
+                class="col-lg-4 col-md-4 col-sm-4"
+                v-for="server in servers"
+                :id="server.ID"
+              >
+                <div class="panel panel-block panel-block-sm panel-location">
+                  <div class="location-header">
+                    <h3
+                      class="h4"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin: 4px 0;
+                      "
+                    >
+                      <div
+                        style="display: flex; justify-content: space-between"
+                      >
+                        <img
+                          height="22px"
+                          :src="'/static/theme-hotaru/img/clients/'+(server.Host&&server.Host.CountryCode?server.Host.CountryCode.toUpperCase():'CN')+'.png'"
+                          style="margin-right: 12px"
+                        />
+                        @#server.Name#@
+                      </div>
+                      <i
+                        class="nezha-secondary-font info circle icon"
+                        style="
+                          height: 22px;
+                          font-size: 18px;
+                          position: relative;
+                        "
+                      ></i>
+                    </h3>
+                    <i class="zmdi zmdi-check-circle text-success"></i>
+                  </div>
+                  <!-- <div class="location-progress">
+                    <div
+                      :class="formatPercent(server.live,mergeUsage(server.State, server.Host),100).class"
+                    >
+                      <div
+                        class="bar"
+                        :style="formatPercent(server.live,mergeUsage(server.State, server.Host),100).style"
+                      ></div>
+                    </div>
+                  </div>
+                  <ul class="location-info list-styled hidden">
+                    <li>
+                      <span class="list-label">{{tr "NetSpeed"}}:</span>
+                      @#server.State?formatByteSize(server.State.NetInSpeed)+`/s
+                      | `+formatByteSize(server.State.NetOutSpeed)+'/s':'-'#@
+                    </li>
+                  </ul> -->
+
+                  <div
+                    class="content"
+                    v-if="server.Host"
+                    style="margin-top: 10px; padding-bottom: 5px"
+                  >
+                    <div class="header">
+                      <div
+                        class="ui content popup"
+                        style="
+                          margin-bottom: 0;
+                          min-width: 320px;
+                          font-size: 14px;
+                          line-height: 2;
+                        "
+                      >
+                        {{tr "Platform"}}:
+                        @#server.Host.Platform#@-@#server.Host.PlatformVersion#@
+                        [<span v-if="server.Host.Virtualization"
+                          >@#server.Host.Virtualization#@:</span
+                        >@#server.Host.Arch#@]<br />
+                        CPU: @#server.Host.CPU#@<br />
+                        {{tr "DiskUsed"}}:
+                        @#formatByteSize(server.State.DiskUsed)#@/@#formatByteSize(server.Host.DiskTotal)#@<br />
+                        {{tr "MemUsed"}}:
+                        @#formatByteSize(server.State.MemUsed)#@/@#formatByteSize(server.Host.MemTotal)#@<br />
+                        {{tr "SwapUsed"}}:
+                        @#formatByteSize(server.State.SwapUsed)#@/@#formatByteSize(server.Host.SwapTotal)#@<br />
+                        {{tr "NetTransfer"}}:
+                        <i class="arrow alternate circle down outline icon"></i
+                        >@#formatByteSize(server.State.NetInTransfer)#@<i
+                          class="arrow alternate circle up outline icon"
+                        ></i
+                        >@#formatByteSize(server.State.NetOutTransfer)#@<br />
+                        {{tr "Load"}}: @# toFixed2(server.State.Load1) #@/@#
+                        toFixed2(server.State.Load5) #@/@#
+                        toFixed2(server.State.Load15) #@<br />
+                        {{tr "ProcessCount"}}: @# server.State.ProcessCount
+                        #@<br />
+                        {{tr "ConnCount"}}: TCP @# server.State.TcpConnCount #@
+                        / UDP @# server.State.UdpConnCount #@<br />
+                        {{tr "BootTime"}}: @#
+                        formatTimestamp(server.Host.BootTime) #@<br />
+                        {{tr "LastActive"}}: @# new
+                        Date(server.LastActive).toLocaleString() #@<br />
+                        {{tr "Version"}}: @#server.Host.Version#@<br />
+                      </div>
+                    </div>
+                    <div class="description">
+                      <div class="ui grid" style="align-items: center">
+                        <div class="three wide column">CPU</div>
+                        <div class="thirteen wide column">
+                          <div
+                            :class="formatPercent(server.live,server.State.CPU, 100).class"
+                          >
+                            <div
+                              class="bar"
+                              :style="formatPercent(server.live,server.State.CPU, 100).style"
+                            >
+                              <small
+                                >@#formatPercent(server.live,server.State.CPU,100).percent#@%</small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="three wide column">{{tr "MemUsed"}}</div>
+                        <div class="thirteen wide column">
+                          <div
+                            :class="formatPercent(server.live,server.State.MemUsed, server.Host.MemTotal).class"
+                          >
+                            <div
+                              class="bar"
+                              :style="formatPercent(server.live,server.State.MemUsed, server.Host.MemTotal).style"
+                            >
+                              <small
+                                >@#parseInt(server.State?server.State.MemUsed/server.Host.MemTotal*100:0)#@%</small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="three wide column">{{tr "SwapUsed"}}</div>
+                        <div class="thirteen wide column">
+                          <div
+                            :class="formatPercent(server.live,server.State.SwapUsed, server.Host.SwapTotal).class"
+                          >
+                            <div
+                              class="bar"
+                              :style="formatPercent(server.live,server.State.SwapUsed, server.Host.SwapTotal).style"
+                            >
+                              <small
+                                >@#parseInt(server.State&&server.Host.SwapTotal?server.State.SwapUsed/server.Host.SwapTotal*100:0)#@%</small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="three wide column">{{tr "DiskUsed"}}</div>
+                        <div class="thirteen wide column">
+                          <div
+                            :class="formatPercent(server.live,server.State.DiskUsed, server.Host.DiskTotal).class"
+                          >
+                            <div
+                              class="bar"
+                              :style="formatPercent(server.live,server.State.DiskUsed, server.Host.DiskTotal).style"
+                            >
+                              <small
+                                >@#parseInt(server.State?server.State.DiskUsed/server.Host.DiskTotal*100:0)#@%</small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="three wide column">{{tr "NetSpeed"}}</div>
+                        <div
+                          class="thirteen wide column"
+                          style="display: table"
+                        >
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="arrow alternate circle down outline icon"
+                            ></i>
+                            @#formatByteSize(server.State.NetInSpeed)#@/s
+                          </div>
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="arrow alternate circle up outline icon"
+                            ></i>
+                            @#formatByteSize(server.State.NetOutSpeed)#@/s
+                          </div>
+                        </div>
+                        <div class="three wide column">流量</div>
+                        <div
+                          class="thirteen wide column"
+                          style="display: table"
+                        >
+                          <div style="width: 50%; display: inline-block">
+                            <i class="arrow circle down icon"></i>
+                            @#formatByteSize(server.State.NetInTransfer)#@
+                          </div>
+                          <div style="width: 50%; display: inline-block">
+                            <i class="arrow circle up icon"></i>
+                            @#formatByteSize(server.State.NetOutTransfer)#@
+                          </div>
+                        </div>
+                        <div class="three wide column">信息</div>
+                        <div
+                          class="thirteen wide column"
+                          style="display: table"
+                        >
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="bi bi-laptop-fill icon"
+                              style="font-size: 1rem; color: #ffb199"
+                            ></i>
+                            @#capitalizedStr(server.Host.Platform)#@
+                          </div>
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="bi bi-cpu-fill icon"
+                              style="font-size: 1rem; color: #4a86e8"
+                            ></i>
+                            @#getCoreAndGHz(server.Host.CPU)#@
+                          </div>
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="bi bi-memory icon"
+                              style="font-size: 1rem; color: #00ac0d"
+                            ></i>
+                            @#getK2Gb(server.Host.MemTotal)#@
+                          </div>
+                          <div style="width: 50%; display: inline-block">
+                            <i
+                              class="bi bi-hdd-rack-fill icon"
+                              style="font-size: 1rem; color: #980000"
+                            ></i>
+                            @#getK2Gb(server.Host.DiskTotal)#@
+                          </div>
+                        </div>
+                        <div class="three wide column">{{tr "Uptime"}}</div>
+                        <div class="thirteen wide column">
+                          <i class="clock icon"></i>
+                          @#secondToDate(server.State.Uptime)#@
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="content" v-else>
+                    <p>@#server.Name#@</p>
+                    <p>{{tr "ServerIsOffline"}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="sidebar-container">
+        <ul>
+          <li id="sun">
+            <i class="fas fa-sun" title='{{tr "LightMode"}}'></i
+            ><span>{{tr "LightMode"}}</span>
+          </li>
+          <li id="moon">
+            <i class="fas fa-moon" title='{{tr "DarkMode"}}'></i
+            ><span>{{tr "DarkMode"}}</span>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+
+    <footer class="sign" style="position: fixed; width: 100%; bottom: 0">
+      <p
+        style="
+          text-align: center;
+          font-weight: bold;
+          text-align: center;
+          padding: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+        "
+      >
+        Powered by
+        <a href="https://github.com/FireTable">FireTable</a>
+        <!-- build · {{.Version}} -->
+        &nbsp;|&nbsp;
+        <!-- <a href="/service">{{tr "Services"}}</a> -->
+        <a href="/server">Admin Panel</a>
+      </p>
+    </footer>
+    <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="/static/semantic-ui-alerts.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+    <script>
+      const initData = JSON.parse('{{.Servers}}').servers;
+      var statusCards = new Vue({
+          el: '#app',
+          delimiters: ['@#', '#@'],
+          data: {
+              servers: initData,
+              cache: [],
+          },
+          mounted() {
+              // this.troggleDarkMode();
+              $('.nezha-secondary-font.info.icon').popup({
+                popup: '.ui.content.popup',
+                exclusive: true,
+              });
+               $('.hidden').removeClass('hidden')
+              //  $('section').addClass('my-cover')
+          },
+          methods: {
+              capitalizedStr(str){
+                return (str || '').charAt(0).toUpperCase() + str.slice(1)
+              },
+              getCoreAndGHz(str){
+                if((str || []).hasOwnProperty(0) === false){
+                    return '';
+                }
+                str = str[0];
+                let GHz = str.match(/(\d|\.)+GHz/g);
+                let Core = str.match(/(\d|\.)+ Physical/g);
+                GHz = GHz!==null?GHz.hasOwnProperty(0)===false?'':GHz[0]:''
+                Core = Core!==null?Core.hasOwnProperty(0)===false?'?':Core[0]:'?'
+                if(Core === '?'){
+                    let Core = str.match(/(\d|\.)+ Virtual/g);
+                    Core = Core!==null?Core.hasOwnProperty(0)===false?'?':Core[0]:'?'
+                    return Core.replace('Virtual','Core').replaceAll(' ','')
+                }
+                return Core.replace('Physical','Core').replaceAll(' ','');
+
+              },
+              getK2Gb(bs){
+                  bs = bs / 1024 /1024 /1024;
+                  return Math.ceil(bs.toFixed(2)) + 'GB';
+              },
+              toFixed2(f) {
+                return f.toFixed(2)
+              },
+              mergeUsage(state, host) {
+                  if (!state) {
+                      return 0
+                  }
+                  if (!host) {
+                      return state.CPU
+                  }
+                  return (state.CPU + (state.MemUsed / host.MemTotal * 100) + (state.DiskUsed / host.DiskTotal * 100)) / 3
+              },
+              getFontLogoClass(str) {
+                if (["almalinux",
+                  "alpine",
+                  "aosc",
+                  "apple",
+                  "archlinux",
+                  "archlabs",
+                  "artix",
+                  "budgie",
+                  "centos",
+                  "coreos",
+                  "debian",
+                  "deepin",
+                  "devuan",
+                  "docker",
+                  "elementary",
+                  "fedora",
+                  "ferris",
+                  "flathub",
+                  "freebsd",
+                  "gentoo",
+                  "gnu-guix",
+                  "illumos",
+                  "kali-linux",
+                  "linuxmint",
+                  "mageia",
+                  "mandriva",
+                  "manjaro",
+                  "nixos",
+                  "openbsd",
+                  "opensuse",
+                  "pop-os",
+                  "raspberry-pi",
+                  "redhat",
+                  "rocky-linux",
+                  "sabayon",
+                  "slackware",
+                  "snappy",
+                  "solus",
+                  "tux",
+                  "ubuntu",
+                  "void",
+                  "zorin"].indexOf(str)
+                  > -1) {
+                    return str;
+                }
+                if (['openwrt','linux'].indexOf(str) > -1) {
+                  return 'tux';
+                }
+                if (str == 'amazon') {
+                  return 'redhat';
+                }
+                if (str == 'arch') {
+                  return 'archlinux';
+                }
+                return '';
+              },
+              isWindowsPlatform(str) {
+                return str.includes('Windows')
+              },
+              formatPercent(live, used, total) {
+                  const percent = live ? (parseInt(used / total * 100) || 0) : -1
+                  if (!this.cache[percent]) {
+                      this.cache[percent] = {
+                          class: {
+                              ui: true,
+                              progress: true,
+                          },
+                          style: {
+                              'transition-duration': '300ms',
+                              'min-width': 'unset',
+                              width: percent + '% !important',
+                          },
+                          percent: percent !== percent ? 0 : percent,
+                      }
+                      if (percent < 0 || percent !== percent) {
+                          this.cache[percent].style['background-color'] = 'slategray'
+                          this.cache[percent].class.offline = true
+                      } else if (percent < 51) {
+                          this.cache[percent].style['background-color'] = '#0a94f2'
+                          this.cache[percent].class.fine = true
+                      } else if (percent < 81) {
+                          this.cache[percent].style['background-color'] = 'orange'
+                          this.cache[percent].class.warning = true
+                      } else {
+                          this.cache[percent].style['background-color'] = 'crimson'
+                          this.cache[percent].class.error = true
+                      }
+                  }
+                  return this.cache[percent]
+              },
+              readableBytes(bytes) {
+                  if (!bytes) {
+                      return '0B'
+                  }
+                  var i = Math.floor(Math.log(bytes) / Math.log(1024)),
+                      sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+                  return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + sizes[i];
+              },
+              formatByteSize(bs) {
+                  const x = this.readableBytes(bs)
+                  return x != "NaN undefined" ? x : '0B'
+              },
+              troggleDarkMode() {
+                  const hour = new Date(Date.now()).getHours()
+                  if (hour > 17 || hour < 4) {
+                      document.body.classList.add('dark');
+                  }
+              },
+              secondToDate(s) {
+                  var d = Math.floor(s / 3600 / 24);
+                  if (d > 0) {
+                      return d + "{{tr "Day"}}"
+                  }
+                  var h = Math.floor(s / 3600 % 24);
+                  var m = Math.floor(s / 60 % 60);
+                  var s = Math.floor(s % 60);
+                  return h + ":" + ("0" + m).slice(-2) + ":" + ("0" + s).slice(-2);
+              },
+              formatTimestamp(t) {
+                  return new Date(t * 1000).toLocaleString()
+              }
+          }
+      })
+
+
+      $(function(){
+          $('#sun').click(function(){
+              $('body').removeClass('dark');
+          });
+          $('#moon').click(function(){
+              $('body').addClass('dark');
+          })
+      })
+
+      const wsProtocol = window.location.protocol == "https:" ? "wss" : "ws"
+      let canShowError = true;
+      function connect() {
+          const ws = new WebSocket(wsProtocol + '://' + window.location.host + '/ws');
+          ws.onopen = function (evt) {
+              canShowError = true;
+              console.warn({
+                  title: '{{tr "RealtimeChannelEstablished"}}',
+                  description: '{{tr "GetTheLatestMonitoringDataInRealTime"}}',
+                  type: 'success',
+                  time: '2',
+                  position: 'top-center',
+              });
+              // $.suiAlert({
+              //     title: '{{tr "RealtimeChannelEstablished"}}',
+              //     description: '{{tr "GetTheLatestMonitoringDataInRealTime"}}',
+              //     type: 'success',
+              //     time: '2',
+              //     position: 'top-center',
+              // });
+          }
+          ws.onmessage = function (evt) {
+              const data = JSON.parse(evt.data)
+              statusCards.servers = data.servers
+              for (let i = 0; i < statusCards.servers.length; i++) {
+                  const ns = statusCards.servers[i];
+                  if (!ns.Host) ns.live = false
+                  else {
+                      const lastActive = new Date(ns.LastActive).getTime()
+                      if (data.now - lastActive > 10 * 1000) {
+                          ns.live = false
+                      } else {
+                          ns.live = true
+                      }
+                  }
+              }
+          }
+          ws.onclose = function () {
+              if (canShowError) {
+                  canShowError = false;
+                  $.suiAlert({
+                      title: '{{tr "RealtimeChannelDisconnect"}}',
+                      description: '{{tr "CanNotGetTheLatestMonitoringDataInRealTime"}}',
+                      type: 'warning',
+                      time: '2',
+                      position: 'top-center',
+                  });
+              }
+              setTimeout(function () {
+                  connect()
+              }, 3000);
+          }
+          ws.onerror = function () {
+              ws.close()
+          }
+      }
+      connect()
+    </script>
+  </body>
+</html>
+{{end}}
